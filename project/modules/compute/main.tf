@@ -2,7 +2,7 @@
 resource "azurerm_network_interface" "vm_nic" {
   name                = "vm-nic"
   location            = var.location
-  resource_group = azurerm_resource_group.main.name
+  resource_group_name = var.resource_group
 
   # Configuración de IP para la NIC, incluyendo subnet y IP pública
   ip_configuration {
@@ -17,7 +17,7 @@ resource "azurerm_network_interface" "vm_nic" {
 resource "azurerm_virtual_machine" "vm" {
   name                  = var.vm_name
   location              = var.location
-  resource_group = azurerm_resource_group.main.name
+  resource_group_name = var.resource_group
   network_interface_ids = [azurerm_network_interface.vm_nic.id]
   vm_size               = var.vm_size
 

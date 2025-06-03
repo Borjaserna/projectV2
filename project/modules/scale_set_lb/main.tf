@@ -21,7 +21,7 @@ resource "azurerm_lb_backend_address_pool" "main" {
 resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   name                = "vmss-security"
   location            = var.location
-  resource_group = azurerm_resource_group.main.name
+  resource_group_name = var.resource_group
   sku                 = var.vm_size
   instances           = var.vmss_instances
 
