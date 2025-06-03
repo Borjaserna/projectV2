@@ -20,5 +20,13 @@ resource "azurerm_public_ip" "vm_ip" {
   location            = var.location
   resource_group_name = var.resource_group
   allocation_method   = "Static"
-  sku = "Standard"
+  sku                 = "Standard"
+}
+
+resource "azurerm_public_ip" "lb_ip" {
+  name                = "lb-public-ip"
+  location            = var.location
+  resource_group_name = var.resource_group
+  allocation_method   = "Static"
+  sku                 = "Standard"
 }

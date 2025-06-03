@@ -14,3 +14,7 @@ output "subnet_id" {
   description = "ID de la subred privada"
   value       = azurerm_subnet.private_subnet.id
 }
+
+output "lb_public_ip" {
+  value = azurerm_public_ip.lb_ip.id
+}
