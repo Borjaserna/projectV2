@@ -25,11 +25,14 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   sku                 = var.vm_size
   instances           = var.vmss_instances
 
-  admin_username      = var.admin_user
-  admin_password      = var.admin_password
+  os_profile {
+    computer_name_prefix = "vmss"
+    admin_username       = var.admin_user
+    admin_password       = var.admin_password
 
-  os_profile_linux_config {
-    disable_password_authentication = false
+    linux_configuration {
+      disable_password_authentication = false
+    }
   }
 
   os_disk {
