@@ -2,7 +2,7 @@
 resource "azurerm_lb" "main" {
   name                = "lb-security"
   location            = var.location
-  resource_group = azurerm_resource_group.main.name
+  resource_group_name = var.resource_group
   sku                 = "Standard"
 
   frontend_ip_configuration {
