@@ -9,7 +9,7 @@ module "network" {
   source         = "./modules/network"
   vnet_name      = "vnet-security"
   location       = var.location
-  resource_group = var.resource_group_name
+  resource_group = azurerm_resource_group.main.name
 }
 
 # Invoca el módulo de cómputo (si lo sigues usando para VM individual)
@@ -17,7 +17,7 @@ module "compute" {
   source          = "./modules/compute"
   vm_name         = "vm-security"
   location        = var.location
-  resource_group  = var.resource_group_name
+  resource_group = azurerm_resource_group.main.name
   subnet_id       = module.network.network_id
   public_ip_id    = module.network.vm_public_ip
   vm_size         = var.vm_size
@@ -29,7 +29,7 @@ module "compute" {
 module "scale_set_lb" {
   source         = "./modules/scale_set_lb"
   location       = var.location
-  resource_group = var.resource_group_name
+  resource_group = azurerm_resource_group.main.name
   subnet_id      = module.network.network_id
   public_ip_id   = module.network.vm_public_ip
   vm_size        = var.vm_size
@@ -43,6 +43,6 @@ module "monitoring" {
   source         = "./modules/monitoring"
   workspace_name = "log-analytics-workspace"
   location       = var.location
-  resource_group = var.resource_group_name
+  resource_group = azurerm_resource_group.main.name
   vm_id          = module.compute.vm_id
 }
