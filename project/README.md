@@ -17,15 +17,16 @@ La infraestructura creada por este proyecto está orientada a la protección, vi
 - **Máquina virtual Linux (Ubuntu)**: Un entorno de servidor listo para pruebas, desarrollo o despliegue de aplicaciones.
 - **Log Analytics Workspace**: Centraliza la recopilación y análisis de logs y métricas de los recursos de Azure.
 - **Alertas de actividad y grupo de acción**: Monitorizan cambios administrativos en la VM y envían notificaciones por correo electrónico a los administradores.
-- **Automatización con GitHub Actions**: Workflows para desplegar y destruir la infraestructura automáticamente desde el repositorio.
+- **Automatización con GitHub Actions**: Workflow único para desplegar y destruir la infraestructura automáticamente desde el repositorio, incluyendo una espera temporal para pruebas.
 - **Variables parametrizables**: Permite personalizar fácilmente nombres, ubicaciones, tamaños y credenciales desde archivos de variables.
 - **Outputs exportados**: Facilita la integración y consulta de los principales identificadores y direcciones generadas tras el despliegue.
 
 ## Automatización con GitHub Actions
-El proyecto está preparado para integrarse con GitHub Actions, permitiendo la automatización del despliegue y destrucción de la infraestructura como parte de un flujo CI/CD. Esto significa que puedes definir workflows en el repositorio para que, cada vez que se realicen cambios en los archivos de Terraform, se ejecuten automáticamente los comandos de `terraform init`, `plan`, `apply` y `destroy` (según la configuración y permisos), asegurando despliegues consistentes y auditables.
+El proyecto está preparado para integrarse con GitHub Actions, permitiendo la automatización del despliegue y destrucción de la infraestructura como parte de un flujo CI/CD. Ahora, el workflow principal (`terraform-deploy.yml`) realiza el despliegue, espera 4 minutos para pruebas o validaciones, y destruye automáticamente la infraestructura para evitar costes innecesarios. Ya no es necesario un workflow separado para la destrucción.
 
-### Ventajas de usar GitHub Actions:
-- **Despliegue automatizado**: No es necesario ejecutar manualmente los comandos en local, todo el proceso puede ser gestionado desde la nube.
+### Ventajas de este enfoque:
+- **Despliegue y destrucción automatizados**: Todo el ciclo de vida de la infraestructura se gestiona en un solo workflow.
+- **Ahorro de costes**: La infraestructura se elimina automáticamente tras un periodo de pruebas.
 - **Auditoría y trazabilidad**: Cada cambio queda registrado en el historial de acciones del repositorio.
 - **Integración continua**: Puedes combinar pruebas, validaciones y despliegues en un solo flujo de trabajo.
 
@@ -37,8 +38,7 @@ El proyecto está preparado para integrarse con GitHub Actions, permitiendo la a
 - `outputs.tf`: Exporta valores útiles tras el despliegue, como el ID de la red, la IP pública de la VM y el ID del workspace de logs.
 - `providers.tf`: Configura el proveedor de AzureRM necesario para interactuar con la nube de Azure.
 - `modules/`: Contiene módulos reutilizables para red, cómputo y monitoreo.
-- `.github/workflows/terraform-deploy.yml`: Workflow para desplegar la infraestructura automáticamente.
-- `.github/workflows/terraform-destroy.yml`: Workflow para destruir la infraestructura automáticamente.
+- `.github/workflows/terraform-deploy.yml`: Workflow para desplegar y destruir la infraestructura automáticamente en un solo flujo, con espera temporal para pruebas.
 
 ## Instrucciones de uso
 1. **Clona este repositorio** y navega al directorio `project`:
