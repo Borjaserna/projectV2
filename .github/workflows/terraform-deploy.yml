@@ -39,7 +39,7 @@ jobs:
         working-directory: ./project
 
       - name: <sleep 240> Esperar 4 minutos antes de destruir
-        run: Start-Sleep -Seconds 240
+        run: sleep 240
 
       - name: <terraform destroy> Destruir infraestructura con Terraform
         run: terraform destroy -auto-approve
