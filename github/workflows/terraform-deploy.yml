@@ -1,0 +1,39 @@
+name: Implementación de Infraestructura con Terraform
+
+on:
+  workflow_dispatch:
+
+jobs:
+  terraform:
+    name: Despliegue automático con Terraform
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: <checkout@v3> Obtener código fuente del repositorio
+        uses: actions/checkout@v3
+
+      - name: <setup & version> Configurar entorno y versión de Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.6.6
+
+      - name: <login con secretos> Autenticarse en Azure con credenciales seguras
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.SECRET }}
+
+      - name: <terraform init> Inicializar módulos y backend en Terraform
+        run: terraform init
+        working-directory: ./project
+
+      - name: <terraform validate> Validar sintaxis y configuración de Terraform
+        run: terraform validate
+        working-directory: ./project
+
+      - name: <terraform plan> Generar plan detallado de cambios en la infraestructura
+        run: terraform plan
+        working-directory: ./project
+
+      - name: <terraform apply> Aplicar configuración y desplegar infraestructura
+        run: terraform apply -auto-approve
+        working-directory: ./project
