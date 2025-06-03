@@ -1,3 +1,9 @@
+# Define el grupo de recursos
+resource "azurerm_resource_group" "main" {
+  name     = var.resource_group_name
+  location = var.location
+}
+
 # Invoca el módulo de red
 module "network" {
   source         = "./modules/network"
