@@ -25,15 +25,9 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   sku                 = var.vm_size
   instances           = var.vmss_instances
 
-  os_profile {
-    computer_name_prefix = "vmss"
-    admin_username       = var.admin_user
-    admin_password       = var.admin_password
-
-    linux_configuration {
-      disable_password_authentication = false
-    }
-  }
+  admin_username      = var.admin_user
+  admin_password      = var.admin_password
+  disable_password_authentication = false
 
   os_disk {
     caching              = "ReadWrite"
