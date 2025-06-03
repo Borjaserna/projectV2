@@ -9,3 +9,8 @@ output "vm_public_ip" {
   description = "Dirección IP pública de la VM"
   value       = azurerm_public_ip.vm_ip.id
 }
+
+output "subnet_id" {
+  description = "ID de la subred privada"
+  value       = azurerm_subnet.private_subnet.id
+}

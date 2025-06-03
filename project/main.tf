@@ -18,7 +18,7 @@ module "compute" {
   vm_name         = "vm-security"
   location        = var.location
   resource_group = azurerm_resource_group.main.name
-  subnet_id       = module.network.network_id
+  subnet_id = module.network.subnet_id
   public_ip_id    = module.network.vm_public_ip
   vm_size         = var.vm_size
   admin_user      = var.admin_user
@@ -30,7 +30,7 @@ module "scale_set_lb" {
   source         = "./modules/scale_set_lb"
   location       = var.location
   resource_group = azurerm_resource_group.main.name
-  subnet_id      = module.network.network_id
+  subnet_id = module.network.subnet_id
   public_ip_id   = module.network.vm_public_ip
   vm_size        = var.vm_size
   admin_user     = var.admin_user
