@@ -20,6 +20,8 @@ La infraestructura creada por este proyecto está orientada a la protección, vi
 - **Automatización con GitHub Actions**: Workflow único para desplegar y destruir la infraestructura automáticamente desde el repositorio, incluyendo una espera temporal para pruebas.
 - **Variables parametrizables**: Permite personalizar fácilmente nombres, ubicaciones, tamaños y credenciales desde archivos de variables.
 - **Outputs exportados**: Facilita la integración y consulta de los principales identificadores y direcciones generadas tras el despliegue.
+- **Load Balancer público**: Permite distribuir el tráfico entrante entre las instancias del VMSS, mejorando la disponibilidad y tolerancia a fallos.
+- **Virtual Machine Scale Set (VMSS)**: Permite escalar horizontalmente la infraestructura, desplegando múltiples instancias de máquinas virtuales de forma automática y gestionada.
 
 ## Automatización con GitHub Actions
 El proyecto está preparado para integrarse con GitHub Actions, permitiendo la automatización del despliegue y destrucción de la infraestructura como parte de un flujo CI/CD. Ahora, el workflow principal (`terraform-deploy.yml`) realiza el despliegue, espera 4 minutos para pruebas o validaciones, y destruye automáticamente la infraestructura para evitar costes innecesarios. Ya no es necesario un workflow separado para la destrucción.
