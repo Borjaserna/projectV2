@@ -40,6 +40,7 @@ jobs:
 
       - name: <sleep 240> Esperar 4 minutos antes de destruir para pruebas
         run: sleep 240
+        # Cambiar antes de ejecutar el workflow para la demo
 
       - name: <terraform destroy> Destruir infraestructura con Terraform
         run: terraform destroy -auto-approve
