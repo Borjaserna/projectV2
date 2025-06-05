@@ -38,8 +38,8 @@ jobs:
         run: terraform apply -auto-approve
         working-directory: ./project
 
-      - name: <sleep 500> Esperar 4 minutos antes de destruir
-        run: sleep 500
+      - name: <sleep 600> Esperar 10 minutos antes de destruir para la demo
+        run: sleep 600
 
       - name: <terraform destroy> Destruir infraestructura con Terraform
         run: terraform destroy -auto-approve
