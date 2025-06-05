@@ -23,7 +23,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   location            = var.location
   resource_group_name = var.resource_group
   sku                 = var.vm_size
-  instances           = var.vmss_instances
+  instances           = var.vmss_instances #Número de instancias del Scale Set definido en variables.tf
 
   admin_username      = var.admin_user
   admin_password      = var.admin_password

@@ -23,6 +23,7 @@ resource "azurerm_public_ip" "vm_ip" {
   sku                 = "Standard"
 }
 
+# Crea una IP pública para el Load Balancer
 resource "azurerm_public_ip" "lb_ip" {
   name                = "lb-public-ip"
   location            = var.location

@@ -14,3 +14,6 @@ provider "azurerm" {
     }
   }
 }
+     # Permite que Terraform elimine el resource group aunque contenga recursos dentro.
+      # Si está en 'false', fuerza el borrado completo del grupo y todos sus recursos.
+      # Útil para automatización, pero con precaución.
