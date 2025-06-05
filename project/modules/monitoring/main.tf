@@ -32,6 +32,6 @@ resource "azurerm_monitor_action_group" "alert_action_group" {
 
   email_receiver {
     name          = "AdminEmail"
-    email_address = "franciscodeborja.serna@tajamar365.com"
+    email_address = "Admin@example.com"
   }
 }
