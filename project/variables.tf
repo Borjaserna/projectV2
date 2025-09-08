@@ -30,5 +30,5 @@ variable "admin_user" {
 variable "admin_password" {
   description = "Contraseña del usuario administrador"
   type        = string
-  default     = "YourSecurePassword123!"
+  default     = "Admin!2025-StrongPass#"
 }
