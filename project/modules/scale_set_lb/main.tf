@@ -25,10 +25,8 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   sku                 = var.vm_size
   instances           = var.vmss_instances
 
-  windows_profile {
-    admin_username      = var.admin_user
-    admin_password      = var.admin_password
-  }
+  admin_username      = var.admin_user
+  admin_password      = var.admin_password
 
   os_disk {
     caching              = "ReadWrite"
@@ -40,11 +38,6 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
     offer     = "WindowsServer"
     sku       = "2022-Datacenter"
     version   = "latest"
-  }
-
-  os_profile_windows_config {
-    enable_automatic_updates = true
-    provision_vm_agent       = true
   }
 
   network_interface {
