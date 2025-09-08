@@ -35,13 +35,22 @@ jobs:
         working-directory: ./project
 
       - name: <terraform apply> Aplicar configuración y desplegar infraestructura
+        id: apply
         run: terraform apply -auto-approve
         working-directory: ./project
+        continue-on-error: true
 
       - name: <sleep 240> Esperar 4 minutos antes de destruir para pruebas
+        if: steps.apply.outcome == 'success'
         run: sleep 240
         # Cambiar antes de ejecutar el workflow para la demo
 
-      - name: <terraform destroy> Destruir infraestructura con Terraform
+      - name: <terraform destroy> Destruir infraestructura si falló el apply
+        if: steps.apply.outcome == 'failure'
+        run: terraform destroy -auto-approve
+        working-directory: ./project
+
+      - name: <terraform destroy> Destruir infraestructura tras pruebas
+        if: steps.apply.outcome == 'success'
         run: terraform destroy -auto-approve
         working-directory: ./project
