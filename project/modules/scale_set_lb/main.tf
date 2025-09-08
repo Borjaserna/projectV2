@@ -18,7 +18,7 @@ resource "azurerm_lb_backend_address_pool" "main" {
 }
 
 # Virtual Machine Scale Set
-resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
+resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   name                = "vmss-security"
   location            = var.location
   resource_group_name = var.resource_group
@@ -35,10 +35,16 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   }
 
   source_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "18.04-LTS"
+    publisher = "MicrosoftWindowsServer"
+    offer     = "WindowsServer"
+    sku       = "2022-Datacenter"
     version   = "latest"
+  }
+
+  os_profile {
+    computer_name_prefix = "vmss"
+    admin_username       = var.admin_user
+    admin_password       = var.admin_password
   }
 
   network_interface {
@@ -52,4 +58,23 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
       load_balancer_backend_address_pool_ids  = [azurerm_lb_backend_address_pool.main.id]
     }
   }
+}
+
+resource "azurerm_lb_rule" "rdp" {
+  name                           = "RDP"
+  loadbalancer_id                = azurerm_lb.main.id
+  protocol                      = "Tcp"
+  frontend_port                  = 3389
+  backend_port                   = 3389
+  frontend_ip_configuration_name = "PublicIPAddress"
+  backend_address_pool_id        = azurerm_lb_backend_address_pool.main.id
+  probe_id                      = azurerm_lb_probe.rdp.id
+}
+
+resource "azurerm_lb_probe" "rdp" {
+  name                = "rdp-probe"
+  resource_group_name = var.resource_group
+  loadbalancer_id     = azurerm_lb.main.id
+  protocol            = "Tcp"
+  port                = 3389
 }

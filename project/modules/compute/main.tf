@@ -29,22 +29,18 @@ resource "azurerm_virtual_machine" "vm" {
     managed_disk_type = "Standard_LRS"
   }
 
-  # Imagen base para la VM (Ubuntu 18.04)
+  # Imagen base para la VM (Windows Server 2022)
   storage_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "18.04-LTS"
+    publisher = "MicrosoftWindowsServer"
+    offer     = "WindowsServer"
+    sku       = "2022-Datacenter"
     version   = "latest"
   }
 
-  # Perfil del sistema operativo, incluyendo usuario y contraseña de admin
+  # Perfil del sistema operativo para Windows
   os_profile {
     computer_name  = var.vm_name
     admin_username = var.admin_user
     admin_password = var.admin_password
-  }
-
-  os_profile_linux_config {
-    disable_password_authentication = false
   }
 }
