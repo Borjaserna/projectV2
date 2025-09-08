@@ -6,3 +6,9 @@ variable "location" {}
 
 # Variable para el nombre del grupo de recursos
 variable "resource_group" {}
+
+# Variable para el ID de la interfaz de red
+variable "nic_id" {
+  description = "ID de la interfaz de red de la VM"
+  type        = string
+}

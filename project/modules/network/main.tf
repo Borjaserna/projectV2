@@ -31,3 +31,28 @@ resource "azurerm_public_ip" "lb_ip" {
   allocation_method   = "Static"
   sku                 = "Standard"
 }
+
+# Añadir el recurso
+resource "azurerm_network_security_group" "vm_nsg" {
+  name                = "vm-nsg"
+  location            = var.location
+  resource_group_name = var.resource_group
+
+  security_rule {
+    name                       = "Allow-SSH"
+    priority                   = 1001
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "22"
+    source_address_prefix      = "*" 
+    destination_address_prefix = "*"
+  }
+}
+
+# Asocia el NSG a la interfaz de red de la VM
+resource "azurerm_network_interface_security_group_association" "vm_nsg_assoc" {
+  network_interface_id      = var.nic_id
+  network_security_group_id = azurerm_network_security_group.vm_nsg.id
+}

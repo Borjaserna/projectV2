@@ -9,6 +9,7 @@ module "network" {
   source         = "./modules/network"
   vnet_name      = "vnet-security"
   location       = var.location
+  nic_id         = module.compute.nic_id
   resource_group = azurerm_resource_group.main.name
 }
 
