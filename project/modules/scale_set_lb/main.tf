@@ -23,11 +23,10 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   location            = var.location
   resource_group_name = var.resource_group
   sku                 = var.vm_size
-  instances           = var.vmss_instances #Número de instancias del Scale Set definido en variables.tf
+  instances           = var.vmss_instances
 
   admin_username      = var.admin_user
   admin_password      = var.admin_password
-  disable_password_authentication = false
 
   os_disk {
     caching              = "ReadWrite"
@@ -41,10 +40,9 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
     version   = "latest"
   }
 
-  os_profile {
-    computer_name_prefix = "vmss"
-    admin_username       = var.admin_user
-    admin_password       = var.admin_password
+  os_profile_windows_config {
+    enable_automatic_updates = true
+    provision_vm_agent       = true
   }
 
   network_interface {
@@ -73,7 +71,6 @@ resource "azurerm_lb_rule" "rdp" {
 
 resource "azurerm_lb_probe" "rdp" {
   name                = "rdp-probe"
-  resource_group_name = var.resource_group
   loadbalancer_id     = azurerm_lb.main.id
   protocol            = "Tcp"
   port                = 3389
