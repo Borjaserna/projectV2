@@ -25,8 +25,10 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   sku                 = var.vm_size
   instances           = var.vmss_instances
 
-  admin_username      = var.admin_user
-  admin_password      = var.admin_password
+  windows_profile {
+    admin_username      = var.admin_user
+    admin_password      = var.admin_password
+  }
 
   os_disk {
     caching              = "ReadWrite"
@@ -65,7 +67,7 @@ resource "azurerm_lb_rule" "rdp" {
   frontend_port                  = 3389
   backend_port                   = 3389
   frontend_ip_configuration_name = "PublicIPAddress"
-  backend_address_pool_id        = azurerm_lb_backend_address_pool.main.id
+  backend_address_pool_ids        = [azurerm_lb_backend_address_pool.main.id]
   probe_id                      = azurerm_lb_probe.rdp.id
 }
 
